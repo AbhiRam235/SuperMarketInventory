@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+    <script>
+        function enableEditing() {
+            document.getElementById("profile-view").style.display = "none";
+            document.getElementById("profile-edit").style.display = "block";
+        }
+
+        function cancelEditing() {
+            document.getElementById("profile-view").style.display = "block";
+            document.getElementById("profile-edit").style.display = "none";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <a href="{% url 'customer_dashboard' %}" class="home-btn">🏠 Home</a>
+        <h2>Profile</h2>
+    </header>
+
+    <div class="profile-container">
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Read-Only Profile View -->
+        <div id="profile-view">
+            <p><strong>Full Name:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone }}</p>
+            <p><strong>Address:</strong> {{ user.address }}</p>
+            <button onclick="enableEditing()">Update Details</button>
+        </div>
+
+        <!-- Editable Profile Form -->
+        <div id="profile-edit" style="display: none;">
+            <form method="POST">
+                {% csrf_token %}
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" value="{{ user.name }}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" value="{{ user.phone }}" required>
+
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" required>{{ user.address }}</textarea>
+
+                <button type="submit">Save Changes</button>
+                <button type="button" onclick="cancelEditing()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

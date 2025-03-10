@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Supermarket Home{% endblock %}</title>
+        {% load static %}
+        
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+        
+        {% block extra_css %}{% endblock %}
+    </head>
+    
+<body>
+    <header>
+        <div class="top-bar">
+            <a href="#">Contact Us</a>
+            {%block profile%}
+            <a href="{% url 'login' %}">Login/Signup</a>
+            {% endblock %}
+        </div>
+        <nav>
+            <div class="logo">Supermarket</div>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">Shop by Category</a></li>
+                <li><a href="#">Deals</a></li>
+                <li><a href="#">New Arrivals</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" placeholder="Search products">
+                <button>🔍</button>
+            </div>
+            <div class="cart-icon">🛒<span class="cart-count">0</span></div>
+        </nav>
+    </header>
+    
+    <main>
+        {% block content %}
+        <section class="banner">
+            <h1>Savor the Symphony of Flavors</h1>
+            <p>Rice, Dhals, Spices, Dry Fruits, Pulses, Cereal, Millets, Grains, Flours</p>
+        </section>
+
+        <section class="offers">
+            <div class="offer">GET 10% DISCOUNT on first purchase - Use Code: FIRSTBUY10</div>
+            <div class="offer">FREE DELIVERY on orders ₹499 & above</div>
+        </section>
+
+        <section class="categories">
+            <h2>Shop by Category</h2>
+            <div class="category-grid">
+                <div class="category">Fruits & Vegetables</div>
+                <div class="category">Dairy & Bakery</div>
+                <div class="category">Beverages</div>
+                <div class="category">Snacks & Instant Foods</div>
+            </div>
+        </section>
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Supermarket. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

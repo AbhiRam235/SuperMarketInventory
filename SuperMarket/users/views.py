@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, LoginForm
 from .models import User
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.contrib.auth.hashers import check_password
 
 def register_user(request):
@@ -58,10 +59,44 @@ def login_user(request):
 
     return render(request, "login.html", {"form": form})
 
+def profile(request):
+    # Fetch user from session
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return redirect("login")  # Redirect to login if session expired
+
+    user = User.objects.get(id=user_id)  # Get the user from DB
+
+    if request.method == "POST":
+        # Update user details
+        user.name = request.POST.get("name")
+        user.email = request.POST.get("email")
+        user.phone = request.POST.get("phone")
+        user.address = request.POST.get("address")
+        user.save()
+
+        messages.success(request, "Profile updated successfully!")
+        return redirect("profile")
+
+    return render(request, "profile.html", {"user": user})
 
 def owner_dashboard(request):
     return render(request, "owner_dashboard.html")
 
 
 def customer_dashboard(request):
-    return render(request, "customer_dashboard.html")
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return redirect("login")  # Redirect to login if session expired
+
+    user = User.objects.get(id=user_id)  # Get user from database
+
+    return render(request, "customer_dashboard.html", {"user": user})
+
+def home(request):
+    return render(request, "partials/home.html")
+
+
+def logout_view(request):
+    request.session.flush()
+    return redirect("home")

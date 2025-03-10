@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Dashboard</title>
-</head>
-<body>
-    <h2>Welcome, Customer!</h2>
-    <p>This is your dashboard.</p>
-</body>
-</html>
+{% extends 'partials/home.html' %}
+
+{% block title %}Customer Dashboard{% endblock %}
+
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/customer_dashboard.css' %}">
+{% endblock %}
+
+{% block profile %}
+    <div class="profile-actions">
+        <h1>Welcome, {{ user.name }}!</h1>
+        <a href="{% url 'profile' %}">Profile</a> | 
+        <a href="{% url 'logout_view' %}">Logout</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <section class="dashboard">
+        <h2>Welcome, Customer!</h2>
+        <p>This is your dashboard.</p>
+    </section>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'partials/home.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/product_detail.css' %}">
+{% endblock %}
+
+{% block topNav %}
+        <!--not mentioning topnav here-->
+{% endblock %}
+
+{% block home %}
+    <li><a href="{% url 'customer_dashboard' %}">Home</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="product-container">
+    <!-- Left: Product Image -->
+    <div class="product-image">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>
+
+    <!-- Right: Product Details -->
+    <div class="product-details">
+        <h1 class="product-name">{{ product.name }}</h1>
+
+        <!-- Breadcrumb Navigation -->
+        <li style="list-style-type: none;">
+            / {{ category.name|default:"No Category" }} /
+            {{ subcategory.name|default:"No Subcategory" }} /
+            {{ product.name|default:"No Product" }}
+        </li>
+        
+        <br>
+        
+        <!-- Stock Status -->
+        <span class="stock-status {% if product.stock_quantity > 0 %}in-stock{% else %}out-of-stock{% endif %}">
+            {% if product.stock_quantity > 0 %} In Stock {% else %} Out of Stock {% endif %}
+        </span>
+        
+        <!-- Price Section -->
+        <p class="price">
+            ₹{{ product.price }}
+            {% if product.original_price %}
+                <span class="original-price">₹{{ product.original_price }}</span>
+            {% endif %}
+        </p>
+
+        <!-- Quantity Selector -->
+        <div class="quantity">
+            <button class="qty-btn" onclick="decreaseQuantity()">-</button>
+            <input type="number" id="quantity" value="1" min="1">
+            <button class="qty-btn" onclick="increaseQuantity()">+</button>
+        </div>
+
+        <!-- Buttons -->
+        <button class="btn add-to-cart">🛒 Add To Cart</button>
+        <button class="btn wishlist">❤ Add To Wishlist</button>
+
+    </div>
+</div>
+
+<div class="description-container">
+    <h2>Description</h2>
+    <ul>
+        {% for line in product.description.splitlines %}
+            <li>{{ line }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- JavaScript for Quantity Selector -->
+<script>
+    function decreaseQuantity() {
+        let qty = document.getElementById("quantity");
+        if (qty.value > 1) qty.value--;
+    }
+    function increaseQuantity() {
+        let qty = document.getElementById("quantity");
+        qty.value++;
+    }
+</script>
+
+{% endblock %}

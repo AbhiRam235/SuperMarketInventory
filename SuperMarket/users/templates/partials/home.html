@@ -12,12 +12,14 @@
 </head>
 <body>
     <header>
+        {% block topNav %}
         <div class="top-bar">
             <a href="#">Contact Us</a>
             {% block profile %}
                 <a href="{% url 'login' %}">Login/Signup</a>
             {% endblock %}
         </div>
+        {% endblock %}
         <nav>
             <div class="logo">Supermarket</div>
             <ul>

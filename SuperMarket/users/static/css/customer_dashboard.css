@@ -1,79 +1,148 @@
-/* Ensure inheritance from home.css */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
 }
 
-/* Dashboard Section Styling */
+/* Dashboard Container */
 .dashboard {
-    max-width: 800px;
-    margin: 50px auto;
-    background: white;
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Heading Styling */
-.dashboard h2 {
-    color: #333;
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-/* Paragraph Styling */
-.dashboard p {
-    color: #666;
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-/* Dashboard Options */
-.dashboard-options {
+/* Profile Actions */
+.profile-actions {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.profile-actions a {
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.profile-actions a:hover {
+    text-decoration: underline;
+}
+
+/* Product Grid */
+.row {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     margin-top: 20px;
 }
 
-/* Buttons (Profile & Logout) */
-.dashboard-options a {
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+/* Product Card */
+.product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 250px;
+    height: 420px; /* Ensuring all cards have the same height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+/* Product Image */
+.product-card-img {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.product-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Product Details */
+.product-card-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.product-name {
     font-size: 16px;
-    transition: 0.3s;
+    font-weight: bold;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
 }
 
-/* Profile Button */
-.dashboard-options a:first-child {
-    background-color: #007bff;
-    color: white;
+.product-name a {
+    text-decoration: none;
+    color: black;
 }
 
-/* Logout Button */
-.dashboard-options a:last-child {
-    background-color: #dc3545;
-    color: white;
+.product-name a:hover {
+    color: #007bff;
 }
 
-/* Hover Effects */
-.dashboard-options a:hover {
-    opacity: 0.8;
+/* Pricing */
+.pricing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.selling-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.original-price {
+    font-size: 14px;
+    text-decoration: line-through;
+    color: gray;
 }
 
 /* Responsive Design */
-@media (max-width: 600px) {
-    .dashboard {
-        width: 90%;
-        padding: 15px;
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .dashboard-options {
-        flex-direction: column;
-        gap: 10px;
+    .product-card {
+        width: 90%;
+        height: auto; /* Allow height adjustment on smaller screens */
     }
 }

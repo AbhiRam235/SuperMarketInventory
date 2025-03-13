@@ -7,11 +7,16 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/customer_dashboard.css' %}">
 {% endblock %}
 
-{% block profile %}
-    <div class="profile-actions">
-        <h2>Welcome, {{ user.name }}!</h2>
-        <a href="{% url 'profile' %}">Profile</a> | 
-        <a href="{% url 'logout_view' %}">Logout</a>
+{% block topNav %}
+    <div class="top-bar">
+        <a href="#">Contact Us</a>
+        {% block profile %}
+            <div class="profile-actions">
+                <h2>Welcome, {{ user.name }}!</h2>
+                <a href="{% url 'profile' %}">Profile</a> | 
+                <a href="{% url 'logout_view' %}">Logout</a>
+            </div>
+        {% endblock %}
     </div>
 {% endblock %}
 
@@ -21,7 +26,45 @@
 
 {% block content %}
     <section class="dashboard">
-        <h2>Welcome, Customer!</h2>
-        <p>This is your dashboard.</p>
+        <h2>Product Listings</h2>
+        {% for category in categories %}
+            <h3 id="category-{{ category.id }}">{{ category.name }}</h3>
+            <div class="row">
+                {% for product in products %}
+                    {% if product.category == category %}
+                        <div class="col-md-3">
+                            <div class="product-card">
+                                <div class="product-card-img">
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                                </div>
+                                <div class="product-card-body">
+                                    <h5 class="product-name">
+                                        {% if product.category and product.subcategory %}  
+                                            {% with product.category.name|slugify as category_slug %}
+                                            {% with product.subcategory.name|slugify as subcategory_slug %}
+                                            <a href="{% url 'product_detail' username=username category=category_slug subcategory=subcategory_slug product_id=product.id %}">
+                                            {{ product.name }}
+                                            </a>
+                                            {% endwith %}
+                                            {% endwith %}
+                                        {% else %}
+                                            <p>Category or subcategory missing for {{ product.name }}</p>
+                                        {% endif %}
+                                    </h5>
+                                    <div>
+                                        <span class="selling-price">₹{{ product.price }}</span>
+                                        {% if product.original_price %}
+                                            <span class="original-price">₹{{ product.original_price }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <p>No products available.</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
     </section>
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, LoginForm
 from .models import User
+from products.models import Product, Category, SubCategory
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 
@@ -89,8 +90,16 @@ def customer_dashboard(request):
         return redirect("login")  # Redirect to login if session expired
 
     user = User.objects.get(id=user_id)  # Get user from database
+    categories = Category.objects.all()  # Fetch all categories
+    products = Product.objects.select_related("category", "subcategory").all()  # Optimize query
 
-    return render(request, "customer_dashboard.html", {"user": user})
+    return render(request, "customer_dashboard.html", {
+        "user": user,
+        "username": user.name,  # Explicitly pass username
+        "categories": categories,
+        "products": products
+    })
+
 
 def home(request):
     return render(request, "partials/home.html")

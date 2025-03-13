@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Supermarket Home{% endblock %}</title>
-        {% load static %}
-        
-        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-        
-        {% block extra_css %}{% endblock %}
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Supermarket Home{% endblock %}</title>
+    {% load static %}
     
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
 <body>
     <header>
         <div class="top-bar">
             <a href="#">Contact Us</a>
-            {%block profile%}
-            <a href="{% url 'login' %}">Login/Signup</a>
+            {% block profile %}
+                <a href="{% url 'login' %}">Login/Signup</a>
             {% endblock %}
         </div>
         <nav>
             <div class="logo">Supermarket</div>
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
+                {% block home %}
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                {% endblock %}
                 <li><a href="#">Shop by Category</a></li>
                 <li><a href="#">Deals</a></li>
                 <li><a href="#">New Arrivals</a></li>

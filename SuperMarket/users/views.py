@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, LoginForm
 from .models import User
 from django.contrib import messages
-from django.contrib.auth import logout
 from django.contrib.auth.hashers import check_password
 
 def register_user(request):

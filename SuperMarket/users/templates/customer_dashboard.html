@@ -9,10 +9,14 @@
 
 {% block profile %}
     <div class="profile-actions">
-        <h1>Welcome, {{ user.name }}!</h1>
+        <h2>Welcome, {{ user.name }}!</h2>
         <a href="{% url 'profile' %}">Profile</a> | 
         <a href="{% url 'logout_view' %}">Logout</a>
     </div>
+{% endblock %}
+
+{% block home %}
+    <li><a href="{% url 'customer_dashboard' %}">Home</a></li>
 {% endblock %}
 
 {% block content %}

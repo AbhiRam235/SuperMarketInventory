@@ -1,0 +1,58 @@
+{% extends 'partials/home.html' %}
+
+{% block title %}Discounted Products{% endblock %}
+
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/deals.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<section class="dashboard">
+    <h2 class="text-center">💰 Discounted Products 💰</h2>
+
+    {% if categorized_deals %}
+        {% for category, subcategories in categorized_deals.items %}
+            <div class="category-section">
+                <h3 class="category-title">{{ category }}</h3>
+
+                {% for subcategory, products in subcategories.items %}
+                <h1>hello</h1>
+                    <div class="subcategory-section">
+                        <h4 class="subcategory-title">{{ subcategory }}</h4>
+                        <div class="row">
+                            {% for product in products %}
+                                <div class="col-md-3">
+                                    <div class="product-card">
+                                        <div class="product-card-img">
+                                            {% if product.image %}
+                                                <img src="{{ product.image }}" alt="{{ product.name }}">
+                                            {% else %}
+                                                <img src="{% static 'images/default-product.jpg' %}" alt="No Image">
+                                            {% endif %}
+                                        </div>
+                                        <div class="product-card-body">
+                                            <h5 class="product-name">
+                                                <a href="{% url 'product_detail' username=username category=category|slugify subcategory=subcategory|slugify product_id=product.id %}">
+                                                    {{ product.name }}
+                                                </a>
+                                            </h5>
+                                            <div class="pricing">
+                                                <span class="selling-price">₹{{ product.discounted_price }}</span>
+                                                <span class="original-price">₹{{ product.price }}</span>
+                                            </div>
+                                            <p class="discount-info">Discount: <strong>{{ product.discount }}%</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-deals text-center">No discounted products available at the moment.</p>
+    {% endif %}
+</section>
+{% endblock %}

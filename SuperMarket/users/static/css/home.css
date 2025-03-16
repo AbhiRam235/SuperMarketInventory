@@ -97,7 +97,7 @@ nav ul li a {
 .banner {
     text-align: center;
     background: url('banner.jpg') no-repeat center center/cover;
-    color: white;
+    color: rgb(122, 205, 247);
     padding: 50px 20px;
 }
 

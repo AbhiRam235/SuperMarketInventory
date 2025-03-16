@@ -1,5 +1,5 @@
-/* Product Detail Page */
-.product-detail-container {
+/* General Container Styles */
+.product-detail-container, .product-container, .description-container {
     width: 80%;
     margin: 20px auto;
     background: white;
@@ -14,36 +14,35 @@
     font-size: 14px;
     color: #555;
 }
-
 .breadcrumb a {
     text-decoration: none;
     color: #007bff;
 }
-
 .breadcrumb span {
     color: #333;
 }
 
 /* Product Detail Section */
-.product-detail {
+.product-detail, .product-container {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.product-detail img {
+.product-detail img, .product-image img {
     width: 300px;
     height: auto;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.product-info {
+.product-info, .product-details {
     flex: 1;
 }
 
-.product-info h2 {
+.product-info h2, .product-name {
     font-size: 24px;
+    color: #007bff;
     margin-bottom: 10px;
 }
 
@@ -53,10 +52,84 @@
     font-weight: bold;
 }
 
-.description {
+.original-price {
+    font-size: 18px;
+    text-decoration: line-through;
+    color: gray;
+    margin-left: 10px;
+}
+
+/* Stock Status */
+.stock-status {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.in-stock {
+    background: green;
+    color: white;
+}
+
+.out-of-stock {
+    background: red;
+    color: white;
+}
+
+/* Quantity Selector */
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 15px 0;
+}
+
+.qty-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    background: #ddd;
+    border: none;
+    cursor: pointer;
+}
+
+#quantity {
+    width: 40px;
+    text-align: center;
     font-size: 16px;
-    color: #666;
-    margin: 10px 0;
+    padding: 5px;
+}
+
+/* Buttons */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.add-to-cart {
+    background: #007bff;
+    color: white;
+}
+
+.add-to-cart:hover {
+    background: #0056b3;
+}
+
+.wishlist {
+    background: #ff4d4d;
+    color: white;
+}
+
+.wishlist:hover {
+    background: #cc0000;
 }
 
 .buy-button {
@@ -109,4 +182,15 @@
 .related-product-card span {
     color: #007bff;
     font-weight: bold;
+}
+
+/* Description */
+.description-container h2 {
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 16px;
+    color: #666;
+    margin: 10px 0;
 }

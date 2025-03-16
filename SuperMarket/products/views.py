@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import F, ExpressionWrapper, DecimalField
 from collections import defaultdict
 from .models import Product, Category
+from users.models import User
 
 def product_detail(request, username, category, subcategory, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -13,34 +14,19 @@ def product_detail(request, username, category, subcategory, product_id):
     })
 
 def deals_page(request):
-    # Calculate the discounted price dynamically
-    discounted_price = ExpressionWrapper(
-        F('price') - (F('price') * F('discount') / 100),
-        output_field=DecimalField(max_digits=10, decimal_places=2)
-    )
+    user_id = request.session.get("user_id")
 
-    # Fetch products that have discounts and stock available
-    deals = Product.objects.annotate(discounted_price=discounted_price).filter(
-        discount__gt=0,  # Only include products that have a discount
-        stock_quantity__gt=0  # Only include available products
-    ).select_related('subcategory', 'subcategory__category')  # Optimize query
+    user = User.objects.get(id=user_id)  # Get user from database
+    categories = Category.objects.all()  # Fetch all categories
+    products = Product.objects.select_related("category", "subcategory").all()  # Optimize query
 
-    # Group products by category and subcategory
-    categorized_deals = defaultdict(lambda: defaultdict(list))
+    # Calculate the discounted price for each product
+    for product in products:
+        product.discounted_price = round(product.price - (product.price * product.discount / 100), 2)
 
-    for product in deals:
-        category_name = product.subcategory.category.name
-        subcategory_name = product.subcategory.name
-        categorized_deals[category_name][subcategory_name].append({
-            "id": product.id,
-            "name": product.name,
-            "image": product.image.url if product.image else None,
-            "price": str(product.price),  # Convert Decimal to string
-            "discounted_price": str(product.discounted_price),  # Convert Decimal to string
-            "discount": str(product.discount),  # Convert Decimal to string
-        })
-
-    return render(request, 'deals.html', {
-    'categorized_deals': dict(categorized_deals),
-    'username': request.user.username if request.user.is_authenticated else "guest",
-})
+    return render(request, "deals.html", {
+        "user": user,
+        "username": user.name,  # Explicitly pass username
+        "categories": categories,
+        "products": products
+    })
